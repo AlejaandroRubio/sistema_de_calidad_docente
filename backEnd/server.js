@@ -8,7 +8,7 @@ const PORT = process.env.PORT;
 dotenv.config();
 
 const authRoutes = require('./routes/auth');
-const surveyRoutes = require('./routes/survey');
+const surveyRoutes = require('./routes/surveys');
 
 const app = express();
 

@@ -22,11 +22,13 @@ const surveySchema = new mongoose.Schema({
             opciones: [String]
         },
     ],
+    /*
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
+    */
 });
 
 module.exports = mongoose.model('Survey', surveySchema);

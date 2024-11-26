@@ -8,7 +8,6 @@ exports.createSurvey = async (req, res) => {
             title,
             description,
             questions,
-            user: req.user.userId
         });
         await newSurvey.save();
         res.status(201).json(newSurvey);
@@ -20,7 +19,7 @@ exports.createSurvey = async (req, res) => {
 
 exports.getSurveys = async (req, res) => {
     try {
-        const surveys = await Survey.find().populate('user', 'name');
+        const surveys = await Survey.find();
         res.json(surveys);
     } catch (error) {
         console.error(error);
