@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const surveySchema = new mongoose.Schema({
     title:{
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     description:{
         type: String,
@@ -22,13 +23,11 @@ const surveySchema = new mongoose.Schema({
             opciones: [String]
         },
     ],
-    /*
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
-    */
 });
 
 module.exports = mongoose.model('Survey', surveySchema);
