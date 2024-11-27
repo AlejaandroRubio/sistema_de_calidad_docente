@@ -13,7 +13,6 @@ exports.register = async (req, res) => {
         }
 
         user = new User({name,email,password});
-        console.log(user);
         await user.save();
 
         const payload = {userId: user.id, name: user.name, email: user.email};
