@@ -13,9 +13,10 @@ exports.register = async (req, res) => {
         }
 
         user = new User({name,email,password});
+        console.log(user);
         await user.save();
 
-        const payload = {userId: user.id};
+        const payload = {userId: user.id, name: user.name, email: user.email};
 
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
             expiresIn: '1h'
@@ -44,7 +45,7 @@ exports.login = async (req, res) => {
             return res.status(400).json({ msg: 'Contraseña incorrecta' });
         }
 
-        const payload = {userId: user.id};
+        const payload = {userId: user.id, name: user.name, email: user.email};
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
             expiresIn: '1h'
         });
