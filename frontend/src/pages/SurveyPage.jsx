@@ -6,10 +6,13 @@ function EncuestasPage() {
   const [encuestas, setEncuestas] = useState([]);
   const [detalleEncuesta, setDetalleEncuesta] = useState(null);
   const [mostrarDetalles, setMostrarDetalles] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const fetchEncuestas = async () => {
+  const fetchEncuestas = async (title = '') => {
     try {
-      const { data } = await api.get('/survey');
+      const { data } = title 
+        ? await api.get(`/survey/search/by-title?title=${title}`)
+        : await api.get('/survey');
       console.log(data);
       setEncuestas(data);
     } catch (err) {
@@ -18,7 +21,7 @@ function EncuestasPage() {
   };
 
   const handleEncuestaCreada = () => {
-    fetchEncuestas();
+    fetchEncuestas(searchTerm); // Refrescar la lista de encuestas después de crear una
   };
 
   const verDetallesEncuesta = async (id) => {
@@ -50,11 +53,28 @@ function EncuestasPage() {
     fetchEncuestas();
   }, []);
 
+  useEffect(() => {
+    if (searchTerm !== '') {
+      fetchEncuestas(searchTerm); // Realiza la búsqueda cuando cambia el término de búsqueda
+    } else {
+      fetchEncuestas(); // Si no hay término de búsqueda, carga todas las encuestas
+    }
+  }, [searchTerm]);
+
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <h1 className="text-2xl font-bold mb-6">Mis Encuestas</h1>
       <div className="mb-6">
         <EncuestaForm onEncuestaCreada={handleEncuestaCreada} />
+      </div>
+      <div className="mb-4">
+        <input
+          type="text"
+          placeholder="Buscar por título"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="border p-2 rounded w-full"
+        />
       </div>
       <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {encuestas.map((encuesta) => (

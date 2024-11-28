@@ -2,11 +2,13 @@ import { useState } from 'react';
 import api from '../services/api';
 
 function EncuestaForm({ onEncuestaCreada }) {
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     title: '',
     description: '',
     questions: [{ tipo: 'text', pregunta: '', opciones: [] }],
-  });
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState('');
 
   const handleChange = (e) => {
@@ -71,6 +73,10 @@ function EncuestaForm({ onEncuestaCreada }) {
         user: 'your_user_id' // Asegúrate de proporcionar el ID del usuario actual
       });
       onEncuestaCreada(); // Callback para actualizar la lista de encuestas
+
+      // Restablecer el formulario
+      setFormData(initialFormData);
+      setError(''); // Limpiar errores en caso de que haya mensajes previos
     } catch (err) {
       setError('Error al crear la encuesta: ' + err.response.data.message || err.message);
     }
@@ -147,13 +153,13 @@ function EncuestaForm({ onEncuestaCreada }) {
       <button
         type="button"
         onClick={addQuestion}
-        className="bg-gray-200 text-gray-700 py-1 px-3 rounded-lg hover:bg-gray-300 transition mb-4"
+        className="bg-gray-200 m-1 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300 transition mb-4"
       >
         Añadir Pregunta
       </button>
       <button
         type="submit"
-        className="bg-green-500 text-white py-2 px-4 mt-4 rounded-lg hover:bg-green-600 transition"
+        className="bg-green-500 m-1 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition mb-4"
       >
         Guardar Encuesta
       </button>
@@ -162,4 +168,3 @@ function EncuestaForm({ onEncuestaCreada }) {
 }
 
 export default EncuestaForm;
-
