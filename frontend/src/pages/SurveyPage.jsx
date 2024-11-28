@@ -36,6 +36,16 @@ function EncuestasPage() {
     setDetalleEncuesta(null);
   };
 
+  const eliminarEncuesta = async (id) => {
+    try {
+      await api.delete(`/survey/delete/${id}`);
+      setEncuestas(encuestas.filter(encuesta => encuesta._id !== id));
+      cerrarDetalles(); // Cierra los detalles después de eliminar
+    } catch (err) {
+      console.error('Error al eliminar la encuesta:', err);
+    }
+  };
+
   useEffect(() => {
     fetchEncuestas();
   }, []);
@@ -86,8 +96,14 @@ function EncuestasPage() {
               ))}
             </ul>
             <button 
-              onClick={cerrarDetalles} 
+              onClick={() => eliminarEncuesta(detalleEncuesta._id)}
               className="mt-4 bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 transition"
+            >
+              Eliminar Encuesta
+            </button>
+            <button 
+              onClick={cerrarDetalles} 
+              className="mt-4 ml-2 bg-gray-500 text-white py-1 px-3 rounded hover:bg-gray-600 transition"
             >
               Cerrar
             </button>
