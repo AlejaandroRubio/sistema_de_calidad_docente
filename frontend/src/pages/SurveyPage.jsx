@@ -4,6 +4,8 @@ import api from '../services/api';
 
 function EncuestasPage() {
   const [encuestas, setEncuestas] = useState([]);
+  const [detalleEncuesta, setDetalleEncuesta] = useState(null);
+  const [mostrarDetalles, setMostrarDetalles] = useState(false);
 
   const fetchEncuestas = async () => {
     try {
@@ -19,8 +21,23 @@ function EncuestasPage() {
     fetchEncuestas();
   };
 
+  const verDetallesEncuesta = async (id) => {
+    try {
+      const { data } = await api.get(`/survey/${id}`);
+      setDetalleEncuesta(data);
+      setMostrarDetalles(true);
+    } catch (err) {
+      console.error('Error al cargar los detalles de la encuesta:', err);
+    }
+  };
+
+  const cerrarDetalles = () => {
+    setMostrarDetalles(false);
+    setDetalleEncuesta(null);
+  };
+
   useEffect(() => {
-    fetchEncuestas(); // Cargar encuestas al montar el componente
+    fetchEncuestas();
   }, []);
 
   return (
@@ -37,10 +54,26 @@ function EncuestasPage() {
           >
             <h3 className="text-lg font-semibold">{encuesta.title}</h3>
             <p className="text-gray-600">{encuesta.description}</p>
-            {/* Agregar preguntas aquí si es necesario */}
-            <ul className="mt-2 space-y-2">
-              {encuesta.questions && encuesta.questions.map((question, index) => (
-                <li key={index} className="text-gray-800">
+            <button
+              onClick={() => verDetallesEncuesta(encuesta._id)}
+              className="mt-2 bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600 transition"
+            >
+              Ver Detalles
+            </button>
+          </li>
+        ))}
+      </ul>
+
+      {/* Modal o sección para mostrar detalles de la encuesta */}
+      {mostrarDetalles && detalleEncuesta && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-11/12 md:w-1/2">
+            <h2 className="text-2xl font-bold mb-4">{detalleEncuesta.title}</h2>
+            <p className="text-gray-600 mb-4">{detalleEncuesta.description}</p>
+            <h3 className="font-semibold mb-2">Preguntas:</h3>
+            <ul>
+              {detalleEncuesta.questions.map((question, index) => (
+                <li key={index} className="text-gray-800 mb-2">
                   <strong>{index + 1}. {question.pregunta}</strong>
                   {question.tipo === 'opcionM' && (
                     <ul className="pl-6 list-disc mt-2">
@@ -52,9 +85,15 @@ function EncuestasPage() {
                 </li>
               ))}
             </ul>
-          </li>
-        ))}
-      </ul>
+            <button 
+              onClick={cerrarDetalles} 
+              className="mt-4 bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 transition"
+            >
+              Cerrar
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

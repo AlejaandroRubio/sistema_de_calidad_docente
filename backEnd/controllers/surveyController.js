@@ -73,7 +73,7 @@ exports.getSurveysByTitle = async (req, res) => {
 exports.deleteSurvey = async (req, res) => {
 
     try {
-        await Survey.findByIdAndDelete(req.body.id);
+        await Survey.findByIdAndDelete(req.params.id);
         res.json({msg: 'Encuesta eliminada'});
     } catch (error) {
         console.error(error);

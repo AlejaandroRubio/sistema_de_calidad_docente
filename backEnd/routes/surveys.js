@@ -7,6 +7,6 @@ router.post('/create',protect, createSurvey);
 router.get('/', protect, getSurveysSummarized);
 router.get('/:id', protect, getSurveysById);
 router.get('/search/by-title', protect, getSurveysByTitle);
-router.delete('/delete', protect, deleteSurvey);
+router.delete('/delete/:id', protect, deleteSurvey);
 
 module.exports = router;    
