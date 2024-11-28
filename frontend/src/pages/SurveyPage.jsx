@@ -26,9 +26,30 @@ function EncuestasPage() {
 
   const verDetallesEncuesta = async (id) => {
     try {
+      
+      // Obtener los detalles de la encuesta
       const { data } = await api.get(`/survey/${id}`);
-      setDetalleEncuesta(data);
-      setMostrarDetalles(true);
+
+      console.log(data.user);
+    // Obtener el usuario que creó la encuesta
+      const username = await api.get(`auth/user/${data.user}`);
+
+      console.log(username);
+      if(username.data === null){
+        username.data = {name: 'Usuario eliminado'};
+      }
+
+    // Crear un nuevo objeto con el nombre del usuario
+      const detalleConUsuario = {
+        ...data,
+        username: username.data.name,
+      };
+      console.log(detalleConUsuario);
+      
+    // Actualizar el estado
+    setDetalleEncuesta(detalleConUsuario);
+    setMostrarDetalles(true);
+
     } catch (err) {
       console.error('Error al cargar los detalles de la encuesta:', err);
     }
@@ -115,6 +136,8 @@ function EncuestasPage() {
                 </li>
               ))}
             </ul>
+            <hr className="my-4" />
+            <h3 className="font-semibold mt-4">Creada por: {detalleEncuesta.username}</h3>
             <button 
               onClick={() => eliminarEncuesta(detalleEncuesta._id)}
               className="mt-4 bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 transition"

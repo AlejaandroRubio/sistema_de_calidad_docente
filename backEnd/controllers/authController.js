@@ -98,7 +98,7 @@ exports.updateUser = async (req, res) => {
 //#region Get User
 exports.findUserById = async (req, res) => {
     try {
-        const user = await User.findById(req.params.id).select('name');
+        const user = await User.findById(req.params.id).select('name -_id');
         res.json(user);
     }catch (error) {
         console.error(error);
