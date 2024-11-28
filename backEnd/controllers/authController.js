@@ -71,8 +71,6 @@ exports.deleteUser = async (req, res) => {
 //#endregion
 
 //#region Update User
-
-
 exports.updateUser = async (req, res) => {
     const { name, email, password } = req.body;
 
@@ -95,6 +93,20 @@ exports.updateUser = async (req, res) => {
         res.status(500).json({msg: 'Hubo un error'});
     }
 }
+//#endregion
+
+//#region Get User
+exports.findUserById = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id).select('name');
+        res.json(user);
+    }catch (error) {
+        console.error(error);
+        res.status(500).json({msg: 'Hubo un error'});
+    }
+}
+//#endregion
+
 
 function EncryptPassword(password) {
     const salt = bcrypt.genSaltSync(10);
