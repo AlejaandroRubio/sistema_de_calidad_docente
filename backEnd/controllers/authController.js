@@ -105,6 +105,20 @@ exports.findUserById = async (req, res) => {
         res.status(500).json({msg: 'Hubo un error'});
     }
 }
+
+exports.findUserByEmail = async (req, res) => {
+    
+    const { email } = req.query;
+
+    try {
+        const user = await User.findOne({email: { $regex: email, $options: 'i' }}).select('name -_id');
+        res.json(user);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({msg: 'Hubo un error'});
+    }
+}
 //#endregion
 
 
