@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import EncuestaForm from '../components/SurveyForm';
 import api from '../services/api';
+import { useNavigate } from 'react-router-dom'; // Importa useNavigate
 
 function EncuestasPage() {
   const [encuestas, setEncuestas] = useState([]);
@@ -9,6 +10,7 @@ function EncuestasPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [userData, setUserData] = useState({ name: '', email: '', password: '' });
   const [editingUser, setEditingUser] = useState(false);
+  const navigate = useNavigate(); // Inicializar useNavigate
 
   const fetchEncuestas = async (title = '') => {
     try {
@@ -53,13 +55,17 @@ function EncuestasPage() {
 
   const updateUser = async () => {
     try {
-      await api.put('/auth/update', userData); // Aquí actualiza el usuario
-      setEditingUser(false); // Cerrar el modo de edición
+      await api.put('/auth/update', userData);
+      setEditingUser(false);
       setUserData({ name: '', email: '', password: '' });
-      // También podrías actualizar el estado del usuario aquí si lo necesitas
     } catch (err) {
       console.error('Error al actualizar los datos del usuario:', err);
     }
+  };
+
+  const cerrarSesion = () => {
+    localStorage.removeItem('token'); // Eliminar el token del storage
+    navigate('/'); // Redirigir a la página principal
   };
 
   useEffect(() => {
@@ -98,7 +104,7 @@ function EncuestasPage() {
           className="border p-2 rounded w-full"
         />
       </div>
-  
+
       {/* Modal para editar los datos de usuario */}
       {editingUser && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -194,8 +200,18 @@ function EncuestasPage() {
           </div>
         </div>
       )}
+      
+      {/* Botón para cerrar sesión */}
+      <div className="fixed bottom-4 right-4">
+        <button 
+          onClick={cerrarSesion} 
+          className="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700 transition"
+        >
+          Cerrar Sesión
+        </button>
+      </div>
     </div>
   );
 }
 
-export default EncuestasPage;
+export default EncuestasPage; 
