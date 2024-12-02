@@ -31,9 +31,10 @@ function AuthForm({ onAuthSuccess }) {
                     email: formData.email,
                     password: formData.password
                 });
-                const userResponse = await api.get(`/auth/user/search/email?email=${formData.email}`);
+                
+                //const userResponse = await api.get(`/auth/user/search/email?email=${formData.email}`);
 
-                localStorage.setItem("userName", userResponse.data.name);
+                //localStorage.setItem("userName", userResponse.data.name);
                 localStorage.setItem("token", data.token);
                 onAuthSuccess();
             }

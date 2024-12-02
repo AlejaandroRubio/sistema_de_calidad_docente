@@ -2,6 +2,7 @@ import { useState } from 'react';
 import api from '../services/api';
 
 function EncuestaForm({ onEncuestaCreada }) {
+  // #region Initial State
   const initialFormData = {
     title: '',
     description: '',
@@ -10,18 +11,28 @@ function EncuestaForm({ onEncuestaCreada }) {
 
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState('');
+  //#endregion
 
+  // #region Handlers
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handlePreguntaChange = (index, field, value) => {
+  const handleQuestionChange  = (index, field, value) => {
     const updatedQuestions = [...formData.questions];
     updatedQuestions[index][field] = value;
     setFormData({ ...formData, questions: updatedQuestions });
   };
 
+  const handleOptionChange = (qIndex, oIndex, value) => {
+    const updatedQuestions = [...formData.questions];
+    updatedQuestions[qIndex].opciones[oIndex] = value;
+    setFormData({ ...formData, questions: updatedQuestions });
+  };
+  //#endregion
+
+  // #region Question & Option Management
   const addQuestion = () => {
     const currentQuestion = formData.questions[formData.questions.length - 1];
     if (!currentQuestion.pregunta) {
@@ -46,13 +57,9 @@ function EncuestaForm({ onEncuestaCreada }) {
     updatedQuestions[index].opciones = [...currentOptions, ''];
     setFormData({ ...formData, questions: updatedQuestions });
   };
+  //#endregion
 
-  const handleOptionChange = (qIndex, oIndex, value) => {
-    const updatedQuestions = [...formData.questions];
-    updatedQuestions[qIndex].opciones[oIndex] = value;
-    setFormData({ ...formData, questions: updatedQuestions });
-  };
-
+  //#region Form Submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -81,7 +88,9 @@ function EncuestaForm({ onEncuestaCreada }) {
       setError('Error al crear la encuesta: ' + err.response.data.message || err.message);
     }
   };
+  //#endregion
 
+  //#region Render
   return (
     <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
       <h2 className="text-xl font-bold mb-4">Crear Encuesta</h2>
@@ -111,7 +120,7 @@ function EncuestaForm({ onEncuestaCreada }) {
             placeholder="Pregunta"
             value={pregunta.pregunta}
             onChange={(e) =>
-              handlePreguntaChange(index, 'pregunta', e.target.value)
+              handleQuestionChange (index, 'pregunta', e.target.value)
             }
             className="w-full p-2 mb-2 border rounded-lg focus:outline-none focus:ring focus:ring-green-300"
             required
@@ -119,7 +128,7 @@ function EncuestaForm({ onEncuestaCreada }) {
           <select
             value={pregunta.tipo}
             onChange={(e) =>
-              handlePreguntaChange(index, 'tipo', e.target.value)
+              handleQuestionChange (index, 'tipo', e.target.value)
             }
             className="mb-2 p-2 border rounded-lg focus:outline-none focus:ring focus:ring-green-300"
           >
@@ -166,5 +175,6 @@ function EncuestaForm({ onEncuestaCreada }) {
     </form>
   );
 }
+//#endregion
 
 export default EncuestaForm;

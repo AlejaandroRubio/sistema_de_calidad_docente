@@ -3,27 +3,30 @@ import EncuestaForm from '../components/SurveyForm';
 import api from '../services/api';
 import { useNavigate } from 'react-router-dom'; // Importa useNavigate
 
-function EncuestasPage() {
-  const [encuestas, setEncuestas] = useState([]);
-  const [detalleEncuesta, setDetalleEncuesta] = useState(null);
-  const [mostrarDetalles, setMostrarDetalles] = useState(false);
+function SurveyPage() {
+  //#region State Management
+  const [survey, setSurvey] = useState([]);
+  const [surveyDetails, setSurveyDetails] = useState(null);
+  const [showDetails, setShowDetails] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [userData, setUserData] = useState({ name: '', email: '', password: '' });
   const [editingUser, setEditingUser] = useState(false);
   const navigate = useNavigate(); // Inicializar useNavigate
+  //#endregion
 
-  const fetchEncuestas = async (title = '') => {
+  // #region API Calls
+  const fetchSurveys  = async (title = '') => {
     try {
       const { data } = title 
         ? await api.get(`/survey/search/by-title?title=${title}`)
         : await api.get('/survey');
-      setEncuestas(data);
+      setSurvey(data);
     } catch (err) {
-      console.error('Error al cargar las encuestas:', err);
+      console.error('Error al cargar las survey:', err);
     }
   };
 
-  const verDetallesEncuesta = async (id) => {
+  const viewSurveyDetails = async (id) => {
     try {
       const { data } = await api.get(`/survey/${id}`);
       const username = await api.get(`auth/user/${data.user}`);
@@ -31,23 +34,23 @@ function EncuestasPage() {
         ...data,
         username: username.data ? username.data.name : 'Usuario eliminado',
       };
-      setDetalleEncuesta(detalleConUsuario);
-      setMostrarDetalles(true);
+      setSurveyDetails(detalleConUsuario);
+      setShowDetails(true);
     } catch (err) {
       console.error('Error al cargar los detalles de la encuesta:', err);
     }
   };
 
-  const cerrarDetalles = () => {
-    setMostrarDetalles(false);
-    setDetalleEncuesta(null);
+  const closeDetails  = () => {
+    setShowDetails(false);
+    setSurveyDetails(null);
   };
 
-  const eliminarEncuesta = async (id) => {
+  const deleteSurvey  = async (id) => {
     try {
       await api.delete(`/survey/delete/${id}`);
-      setEncuestas(encuestas.filter(encuesta => encuesta._id !== id));
-      cerrarDetalles();
+      setSurvey(survey.filter(encuesta => encuesta._id !== id));
+      closeDetails ();
     } catch (err) {
       console.error('Error al eliminar la encuesta:', err);
     }
@@ -62,28 +65,32 @@ function EncuestasPage() {
       console.error('Error al actualizar los datos del usuario:', err);
     }
   };
+  //#endregion
 
-  const cerrarSesion = () => {
+  // #region Handlers
+  const logout = () => {
     localStorage.removeItem('token'); // Eliminar el token del storage
     navigate('/'); // Redirigir a la página principal
   };
+  // #endregion
 
+  // #region Effects
   useEffect(() => {
-    fetchEncuestas();
+    fetchSurveys ();
   }, []);
 
   useEffect(() => {
     if (searchTerm !== '') {
-      fetchEncuestas(searchTerm);
+      fetchSurveys (searchTerm);
     } else {
-      fetchEncuestas();
+      fetchSurveys ();
     }
   }, [searchTerm]);
-
+  //#endregion
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Mis Encuestas</h1>
+        <h1 className="text-2xl font-bold">Mis survey</h1>
         <button
           onClick={() => setEditingUser(true)}
           className="bg-green-500 text-white py-1 px-3 rounded hover:bg-green-600 transition"
@@ -93,7 +100,7 @@ function EncuestasPage() {
       </div>
   
       <div className="mb-6">
-        <EncuestaForm onEncuestaCreada={() => fetchEncuestas()} />
+        <EncuestaForm onEncuestaCreada={() => fetchSurveys ()} />
       </div>
       <div className="mb-4">
         <input
@@ -148,12 +155,12 @@ function EncuestasPage() {
       )}
   
       <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {encuestas.map((encuesta) => (
+        {survey.map((encuesta) => (
           <li key={encuesta._id} className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition">
             <h3 className="text-lg font-semibold">{encuesta.title}</h3>
             <p className="text-gray-600">{encuesta.description}</p>
             <button
-              onClick={() => verDetallesEncuesta(encuesta._id)}
+              onClick={() => viewSurveyDetails(encuesta._id)}
               className="mt-2 bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600 transition"
             >
               Ver Detalles
@@ -163,14 +170,14 @@ function EncuestasPage() {
       </ul>
   
       {/* Modal para mostrar detalles de la encuesta */}
-      {mostrarDetalles && detalleEncuesta && (
+      {showDetails && surveyDetails && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-11/12 md:w-1/2">
-            <h2 className="text-2xl font-bold mb-4">{detalleEncuesta.title}</h2>
-            <p className="text-gray-600 mb-4">{detalleEncuesta.description}</p>
+            <h2 className="text-2xl font-bold mb-4">{surveyDetails.title}</h2>
+            <p className="text-gray-600 mb-4">{surveyDetails.description}</p>
             <h3 className="font-semibold mb-2">Preguntas:</h3>
             <ul>
-              {detalleEncuesta.questions.map((question, index) => (
+              {surveyDetails.questions.map((question, index) => (
                 <li key={index} className="text-gray-800 mb-2">
                   <strong>{index + 1}. {question.pregunta}</strong>
                   {question.tipo === 'opcionM' && (
@@ -184,15 +191,15 @@ function EncuestasPage() {
               ))}
             </ul>
             <hr className="my-4" />
-            <h3 className="font-semibold mt-4">Creada por: {detalleEncuesta.username}</h3>
+            <h3 className="font-semibold mt-4">Creada por: {surveyDetails.username}</h3>
             <button 
-              onClick={() => eliminarEncuesta(detalleEncuesta._id)}
+              onClick={() => deleteSurvey (surveyDetails._id)}
               className="mt-4 bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 transition"
             >
               Eliminar Encuesta
             </button>
             <button 
-              onClick={cerrarDetalles} 
+              onClick={closeDetails} 
               className="mt-4 ml-2 bg-gray-500 text-white py-1 px-3 rounded hover:bg-gray-600 transition"
             >
               Cerrar
@@ -204,7 +211,7 @@ function EncuestasPage() {
       {/* Botón para cerrar sesión */}
       <div className="fixed bottom-4 right-4">
         <button 
-          onClick={cerrarSesion} 
+          onClick={logout} 
           className="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700 transition"
         >
           Cerrar Sesión
@@ -214,4 +221,4 @@ function EncuestasPage() {
   );
 }
 
-export default EncuestasPage; 
+export default SurveyPage; 
