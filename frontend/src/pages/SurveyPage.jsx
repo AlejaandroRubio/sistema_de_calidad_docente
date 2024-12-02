@@ -3,6 +3,7 @@ import EncuestaForm from '../components/SurveyForm';
 import api from '../services/api';
 import { useNavigate } from 'react-router-dom'; // Importa useNavigate
 
+
 function SurveyPage() {
   //#region State Management
   const [survey, setSurvey] = useState([]);
@@ -11,6 +12,7 @@ function SurveyPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [userData, setUserData] = useState({ name: '', email: '', password: '' });
   const [editingUser, setEditingUser] = useState(false);
+  const [username, setUsername] = useState('');
   const navigate = useNavigate(); // Inicializar useNavigate
   //#endregion
 
@@ -74,9 +76,14 @@ function SurveyPage() {
   };
   // #endregion
 
+ 
+
   // #region Effects
   useEffect(() => {
     fetchSurveys ();
+    setUsername(localStorage.getItem('userName'));
+    
+
   }, []);
 
   useEffect(() => {
@@ -87,10 +94,12 @@ function SurveyPage() {
     }
   }, [searchTerm]);
   //#endregion
+  
+  //#region Render
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Mis survey</h1>
+        <h1 className="text-2xl font-bold">Hola, {username}</h1>
         <button
           onClick={() => setEditingUser(true)}
           className="bg-green-500 text-white py-1 px-3 rounded hover:bg-green-600 transition"
@@ -219,6 +228,7 @@ function SurveyPage() {
       </div>
     </div>
   );
+  //#endregion
 }
 
 export default SurveyPage; 
