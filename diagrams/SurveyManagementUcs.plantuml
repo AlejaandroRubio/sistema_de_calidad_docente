@@ -1,0 +1,25 @@
+@startuml
+
+left to right direction
+
+actor User
+actor System
+
+rectangle "Survey Management" as SurveyManagement {
+    usecase "Create a Survey" as UC_CreateSurvey
+    usecase "Get All Surveys" as UC_GetAllSurveys
+    usecase "Get Survey by Id" as UC_GetSurveyById
+    usecase "Get Survey by Title" as UC_GetSurveyByTitle
+    usecase "Delete Survey by Id" as UC_DeleteSurvey
+}
+
+
+
+User --> UC_CreateSurvey
+User --> UC_GetSurveyById
+User --> UC_GetSurveyByTitle
+User --> UC_DeleteSurvey
+
+System --> UC_GetAllSurveys
+
+@enduml

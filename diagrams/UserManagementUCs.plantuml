@@ -1,0 +1,22 @@
+@startuml
+
+left to right direction
+
+actor User
+rectangle "User Management" as UserManagement {
+    usecase "Create a User" as UC_CreateUser
+    usecase "Login" as UC_Login
+    usecase "Delete User (itself)" as UC_DeleteUser
+    usecase "Update User by Id" as UC_UpdateUser
+    usecase "Get User by Id" as UC_GetUserById
+    usecase "Get User by Email" as UC_GetUserByEmail
+}
+
+User --> UC_CreateUser
+User --> UC_Login
+User --> UC_DeleteUser
+User --> UC_UpdateUser
+User --> UC_GetUserById
+User --> UC_GetUserByEmail
+
+@enduml

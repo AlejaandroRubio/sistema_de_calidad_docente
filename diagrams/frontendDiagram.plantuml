@@ -1,0 +1,60 @@
+@startuml
+skinparam packageStyle rect
+
+package "Frontend Structure" {
+    package "Components" {
+        class AuthForm {
+            + render()
+            + handleLogin()
+            + handleRegister()
+        }
+        class SurveyForm {
+            + render()
+            + handleCreateSurvey()
+        }
+    }
+
+    package "Pages" {
+        class AuthPage {
+            + render()
+            + loadAuthForm()
+        }
+        class SurveyPage {
+            + render()
+            + loadSurveyForm()
+            + viewSurveyDetails()
+            + deleteSurvey()
+            + editUserData()
+            + deleteUser()
+            + logout()
+        }
+    }
+
+    package "Api" {
+        class Api {
+            + sendRequest(endpoint: string, data: object)
+            + handleAuthRequests()
+            + handleSurveyRequests()
+        }
+    }
+
+    class App {
+        + render()
+        + loadAuthPage()
+        + loadSurveyPage()
+    }
+
+    class Index {
+        + render()
+        + loadApp()
+    }
+
+    AuthPage --> AuthForm : "uses"
+    SurveyPage --> SurveyForm : "uses"
+    SurveyPage --> Api : "calls"
+    AuthPage --> Api : "calls"
+    App --> AuthPage : "renders"
+    App --> SurveyPage : "renders"
+    Index --> App : "renders"
+}
+@enduml

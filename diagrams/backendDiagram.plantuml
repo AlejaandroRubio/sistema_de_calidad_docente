@@ -1,0 +1,67 @@
+@startuml
+skinparam packageStyle rect
+
+package "Backend Structure" {
+    package "Controllers" {
+        class AuthController {
+            + createUser()
+            + readUser()
+            + updateUser()
+            + deleteUser()
+            + login()
+        }
+        class SurveyController {
+            + createSurvey()
+            + readSurvey()
+            + deleteSurvey()
+        }
+    }
+
+    package "Middleware" {
+        class authMiddleware {
+            + verifyToken()
+        }
+    }
+
+    package "Models" {
+        class User {
+            + name: string
+            + email: string
+            + password: string
+        }
+        class Survey {
+            + title: string
+            + description: string
+            + questions: array
+            + userId: int
+        }
+    }
+
+    package "Routes" {
+        class authRoutes {
+            + handleLogin()
+            + handleUserCRUD()
+            + configureMiddleware()
+        }
+        class surveyRoutes {
+            + handleSurveyCRUD()
+            + configureMiddleware()
+        }
+    }
+
+    class Server {
+        + start()
+        + configureRoutes()
+    }
+
+    authRoutes --> AuthController : "calls"
+    surveyRoutes --> SurveyController : "calls"
+    Server --> authRoutes : "configures"
+    Server --> surveyRoutes : "configures"
+    authRoutes -down-> authMiddleware : "uses"
+    surveyRoutes -down-> authMiddleware : "uses"
+    authMiddleware --> User : "verifies"
+    SurveyController --> Survey : "manages"
+    AuthController --> User : "manages"
+}
+@enduml
