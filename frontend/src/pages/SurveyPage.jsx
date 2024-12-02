@@ -217,6 +217,12 @@ function SurveyPage() {
                       ))}
                     </ul>
                   )}
+                  {question.tipo === 'siNo' && (
+                    <p className="text-gray-600">Sí/No</p>
+                  )}
+                  {question.tipo === 'text' && (
+                    <p className="text-gray-600">Texto</p>
+                  )}
                 </li>
               ))}
             </ul>
