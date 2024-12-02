@@ -67,6 +67,16 @@ function SurveyPage() {
       console.error('Error al actualizar los datos del usuario:', err);
     }
   };
+
+  const deleteUser = async () => {
+    try {
+      await api.delete('/auth/delete');
+      localStorage.removeItem('token');
+      navigate('/');
+    } catch (err) {
+      console.error('Error al eliminar la cuenta:', err);
+    }
+  };
   //#endregion
 
   // #region Handlers
@@ -124,7 +134,7 @@ function SurveyPage() {
       {/* Modal para editar los datos de usuario */}
       {editingUser && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-11/12 md:w-1/2">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-10/12 md:w-1/3 lg:w-1/4">
             <h2 className="text-2xl font-bold mb-4">Editar Datos de Usuario</h2>
             <input
               type="text"
@@ -147,18 +157,29 @@ function SurveyPage() {
               onChange={(e) => setUserData({ ...userData, password: e.target.value })}
               className="border p-2 rounded w-full mb-4"
             />
-            <button
-              onClick={updateUser}
-              className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600 transition"
-            >
-              Actualizar
-            </button>
-            <button
-              onClick={() => setEditingUser(false)}
-              className="ml-2 bg-gray-500 text-white py-1 px-3 rounded hover:bg-gray-600 transition"
-            >
-              Cancelar
-            </button>
+            <div className="flex justify-between items-center">
+              <div className="flex">
+                <button
+                  onClick={updateUser}
+                  className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600 transition"
+                >
+                  Actualizar
+                </button>
+                <button
+                  onClick={() => setEditingUser(false)}
+                  className="ml-2 bg-gray-500 text-white py-1 px-3 rounded hover:bg-gray-600 transition"
+                >
+                  Cancelar
+                </button>
+              </div>
+
+              <button
+                onClick={deleteUser}
+                className="ml-2 bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 transition"
+              >
+                Eliminar Cuenta
+              </button>
+            </div>
           </div>
         </div>
       )}
