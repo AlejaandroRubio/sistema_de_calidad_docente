@@ -3,6 +3,7 @@
 left to right direction
 
 actor User
+actor system
 rectangle "User Management" as UserManagement {
     usecase "Create a User" as UC_CreateUser
     usecase "Login" as UC_Login
@@ -10,13 +11,15 @@ rectangle "User Management" as UserManagement {
     usecase "Update User by Id" as UC_UpdateUser
     usecase "Get User by Id" as UC_GetUserById
     usecase "Get User by Email" as UC_GetUserByEmail
+    usecase "Verify Token" as UC_VerifyToken
 }
 
 User --> UC_CreateUser
 User --> UC_Login
 User --> UC_DeleteUser
 User --> UC_UpdateUser
-User --> UC_GetUserById
-User --> UC_GetUserByEmail
+system --> UC_GetUserById
+system --> UC_GetUserByEmail
+system --> UC_VerifyToken
 
 @enduml
