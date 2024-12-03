@@ -3,15 +3,15 @@
 
 | Imagen                                     |                                 |
 | ------------------------------------------ | -------------------------------------- |
-| ![Texto alternativo](diagrams/SVG/backendDiagram.svg) | [Enlace a la carpeta](diagrams/backendDiagram.plantuml) |
+| ![Texto alternativo](SVG/backendDiagram.svg) | [Enlace a la carpeta](backendDiagram.plantuml) |
 
 ## Frontend:
 | Imagen                                     |                                 |
 | ------------------------------------------ | -------------------------------------- |
-| ![Texto alternativo](diagrams/SVG/frontendDiagram.svg) | [Enlace a la carpeta](diagrams/frontendDiagram.plantuml) |
+| ![Texto alternativo](SVG/frontendDiagram.svg) | [Enlace a la carpeta](frontendDiagram.plantuml) |
 
 ### Casos de Uso
 | Imagen                                     |                                 |
 | ------------------------------------------ | -------------------------------------- |
-| ![Texto alternativo](diagrams/SVG/UserManagementUCs.svg) | [Enlace a la carpeta](diagrams/UserManagementUCs.plantuml) |
-| ![Texto alternativo](diagrams/SVG/SurveyManagementUcs.svg) | [Enlace a la carpeta](diagrams/SurveyManagementUcs.plantuml) |
+| ![Texto alternativo](SVG/UserManagementUCs.svg) | [Enlace a la carpeta](UserManagementUCs.plantuml) |
+| ![Texto alternativo](SVG/SurveyManagementUcs.svg) | [Enlace a la carpeta](SurveyManagementUcs.plantuml) |
