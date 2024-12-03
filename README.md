@@ -1,4 +1,4 @@
-# Survey Management System
+# Sistema de Calidad Docente
 
 Este proyecto es una aplicación completa para la gestión de usuarios y encuestas, compuesta por un backend construido con Node.js y un frontend desarrollado con React.  
 
