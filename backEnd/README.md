@@ -145,7 +145,7 @@ Este archivo es el punto de entrada de la aplicación Express. Define la configu
         - `/api/survey`: Rutas para manejar las encuestas (crear, buscar, eliminar encuestas, etc.).
     - Ambas rutas se manejan mediante los routers definidos en archivos separados (`authRoutes` y `surveyRoutes`), lo que mantiene el código modular y organizado.
 
-- Conexión a la base de datos:
+- **Conexión a la base de datos**:
 
     Se llama a `connectDB()` en el arranque del servidor para conectar la aplicación con la base de datos.
 
