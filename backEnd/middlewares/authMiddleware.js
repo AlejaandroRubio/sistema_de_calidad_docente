@@ -16,3 +16,14 @@ exports.protect = (req, res, next) => {
         res.status(401).json({msg: 'Token no válido'});
     }
 }
+
+exports.verifyToken = (req, res) => {
+    const token = req.header('x-auth-token');
+
+    try {
+        jwt.verify(token, process.env.JWT_SECRET);
+        res.json(true);
+    } catch (error) {
+        res.json(false);
+    }
+}

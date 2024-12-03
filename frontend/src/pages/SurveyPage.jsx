@@ -89,6 +89,39 @@ function SurveyPage() {
  
 
   // #region Effects
+
+
+  useEffect(() => {
+ 
+    const verifyToken = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        navigate('/');
+      } else {
+        try {
+          const response= await api.get('/auth/verify-Token');
+          if (response.data === true) {
+            console.log('Token verificado');
+          }else{
+            console.log('Token no verificado');
+            localStorage.removeItem('token');
+            localStorage.removeItem('userName');
+            navigate('/');
+          }
+
+        } catch (err) {
+          console.error('Error al verificar el token:', err);
+          localStorage.removeItem('token');
+          localStorage.removeItem('userName');
+          navigate('/');
+          return;
+        }
+      }
+    }
+    verifyToken();
+  }, [navigate]);
+
+
   useEffect(() => {
     fetchSurveys ();
     setUsername(localStorage.getItem('userName'));
