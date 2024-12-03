@@ -27,7 +27,7 @@ Este proyecto es una aplicación completa para la gestión de usuarios y encuest
 
 ## Estructura del proyecto
 
-### Backend
+### [Backend](backEnd) 
 La estructura del backend es la siguiente:
 
 - **`controllers/`**  
@@ -54,7 +54,7 @@ La estructura del backend es la siguiente:
 
 ---
 
-### Frontend
+### [Frontend](frontend)
 La estructura del frontend es la siguiente:
 
 - **`components/`**  
