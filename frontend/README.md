@@ -30,14 +30,14 @@ Características:
 
     El formulario permite a los usuarios crear encuestas dinámicas mediante una interfaz intuitiva. Se divide en secciones principales:
 
-    - Título y descripción de la encuesta: Estos campos son obligatorios y sirven para identificar la encuesta y proporcionar un contexto general.
-    - Preguntas: Se pueden añadir múltiples preguntas, cada una con un tipo definido (texto, opción múltiple, o sí/no) y, en el caso de las preguntas de opción múltiple, con opciones asociadas.
+    - **Título y descripción de la encuesta:** Estos campos son obligatorios y sirven para identificar la encuesta y proporcionar un contexto general.
+    - **Preguntas:** Se pueden añadir múltiples preguntas, cada una con un tipo definido (**texto, opción múltiple, o sí/no**) y, en el caso de las preguntas de opción múltiple, con opciones asociadas.
 
 2. **Gestión del estado**
-    El estado del formulario se gestiona mediante useState, con dos estados principales:
+    El estado del formulario se gestiona mediante `useState`, con dos estados principales:
 
-    - formData: Contiene los datos ingresados por el usuario, como el título, descripción y las preguntas.
-    - error: Almacena mensajes de error para informar al usuario sobre problemas de validación, como campos incompletos o preguntas mal configuradas.
+    - `formData`: Contiene los datos ingresados por el usuario, como el título, descripción y las preguntas.
+    - `error`: Almacena mensajes de error para informar al usuario sobre problemas de validación, como campos incompletos o preguntas mal configuradas.
 
 3. **Validación dinámica**
 
@@ -89,7 +89,7 @@ Características:
 
 ## **pages/**
 ### **AuthPage.jsx**
-AuthPage actúa como el puente entre la autenticación y la navegación. Su propósito es coordinar el flujo de trabajo después de que el usuario completa el proceso de autenticación, asegurándose de que sea dirigido al lugar correcto en la aplicación.
+**AuthPage** actúa como el puente entre la autenticación y la navegación. Su propósito es coordinar el flujo de trabajo después de que el usuario completa el proceso de autenticación, asegurándose de que sea dirigido al lugar correcto en la aplicación.
 
 **Lógica principal**
 1. **Navegación con `useNavigate`**:
@@ -109,7 +109,7 @@ AuthPage actúa como el puente entre la autenticación y la navegación. Su prop
     - La lógica de autenticación (registro/inicio de sesión) está encapsulada dentro de este componente, mientras que `AuthPage` se encarga solo de manejar el flujo de redirección.
 
 ### **SurveyPage.jsx**
-SurveyPage gestiona las encuestas, la información del usuario y la interacción con el sistema, asegurándose de que los usuarios puedan crear, ver, buscar, editar y eliminar encuestas.
+SurveyPage gestiona las encuestas, la información del usuario y la interacción con el sistema, asegurándose de que los usuarios puedan crear, ver, buscar y eliminar encuestas.
 
 1. **Llamadas a la API:**
     - `fetchSurveys`: Realiza una llamada a la API para obtener todas las encuestas(`/survey`) o filtrar por título si se proporciona un término de búsqueda (`/survey/search/by-title?title=${title}`).
