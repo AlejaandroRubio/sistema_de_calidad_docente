@@ -145,3 +145,16 @@ Dentro del componente Routes, se definen dos rutas:
 
 ## **index.js**
 Este archivo es esencialmente el punto de inicio de la aplicación React. Aquí se importa el componente `App`, se envuelve en `React.StrictMode` para facilitar el desarrollo y se renderiza en el DOM dentro del elemento con el id `root`. Esto le indica a React dónde debe comenzar la renderización de la interfaz de usuario.
+
+## Interfaz grafica
+
+## Login
+![Texto alternativo](../diagrams/PNG/AuthPageLogin.png)
+## Register
+![Texto alternativo](../diagrams/PNG/AuthPageRegister.png)
+## Encuestas
+![Texto alternativo](../diagrams/PNG/SurveyPage.png)
+### Modal de "Ver Detalles"
+![Texto alternativo](../diagrams/PNG/SurveyPageVerDetalles.png)
+### Modal de "Editar Datos del Usuario"
+![Texto alternativo](../diagrams/PNG/SurveyPageEditarDatosUsuario.png)
