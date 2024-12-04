@@ -97,6 +97,7 @@ La estructura del frontend es la siguiente:
 - **Axios**: Cliente HTTP para realizar solicitudes al backend.
 - **Testing Library**: Herramientas para pruebas en React.
 - **Web Vitals**: Métricas de rendimiento para aplicaciones web.
+- **Tailwind CSS**: Para los estilos de la diferentes vistas del proyecto
 
 
 ---

@@ -9,22 +9,25 @@ function EncuestaForm({ onEncuestaCreada }) {
     questions: [{ tipo: 'text', pregunta: '', opciones: [] }],
   };
 
-  const [formData, setFormData] = useState(initialFormData);
-  const [error, setError] = useState('');
+  const [formData, setFormData] = useState(initialFormData); // Estado del formulario.
+  const [error, setError] = useState(''); // Estado para manejar errores.
   //#endregion
 
   // #region Handlers
+  // Maneja los cambios en los campos generales del formulario.
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  // Maneja los cambios en las preguntas individuales.
   const handleQuestionChange  = (index, field, value) => {
     const updatedQuestions = [...formData.questions];
     updatedQuestions[index][field] = value;
     setFormData({ ...formData, questions: updatedQuestions });
   };
 
+   // Maneja los cambios en las opciones de una pregunta de tipo "opcionM".
   const handleOptionChange = (qIndex, oIndex, value) => {
     const updatedQuestions = [...formData.questions];
     updatedQuestions[qIndex].opciones[oIndex] = value;
@@ -33,6 +36,7 @@ function EncuestaForm({ onEncuestaCreada }) {
   //#endregion
 
   // #region Question & Option Management
+  // Añade una nueva pregunta al formulario.
   const addQuestion = () => {
     const currentQuestion = formData.questions[formData.questions.length - 1];
     if (!currentQuestion.pregunta) {
@@ -48,9 +52,10 @@ function EncuestaForm({ onEncuestaCreada }) {
       ...formData,
       questions: [...formData.questions, { tipo: 'text', pregunta: '', opciones: [] }],
     });
-    setError('');
+    setError(''); // Limpia errores si los había.
   };
 
+  // Añade una opción a una pregunta específica.
   const addOption = (index) => {
     const updatedQuestions = [...formData.questions];
     const currentOptions = updatedQuestions[index].opciones;
@@ -60,6 +65,7 @@ function EncuestaForm({ onEncuestaCreada }) {
   //#endregion
 
   //#region Form Submission
+  // Maneja el envío del formulario al backend.
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -73,16 +79,16 @@ function EncuestaForm({ onEncuestaCreada }) {
       return;
     }
 
-    // Envío al backend
     try {
+      // Enviar encuesta al backend.
       await api.post('/survey/create', { 
         ...formData,
-        user: 'your_user_id' // Asegúrate de proporcionar el ID del usuario actual
+        user: 'your_user_id'
       });
-      onEncuestaCreada(); // Callback para actualizar la lista de encuestas
+      onEncuestaCreada(); // Notifica al componente padre sobre la creación exitosa.
 
       // Restablecer el formulario
-      setFormData(initialFormData);
+      setFormData(initialFormData); // Restablece el formulario.
       setError(''); // Limpiar errores en caso de que haya mensajes previos
     } catch (err) {
       setError('Error al crear la encuesta: ' + err.response.data.message || err.message);
@@ -174,7 +180,8 @@ function EncuestaForm({ onEncuestaCreada }) {
       </button>
     </form>
   );
+  //#endregion
+
 }
-//#endregion
 
 export default EncuestaForm;

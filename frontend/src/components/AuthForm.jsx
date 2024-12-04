@@ -1,46 +1,51 @@
 import { useState } from "react";
 import api from "../services/api";
 
-function AuthForm({ onAuthSuccess }) {
-    const [isRegistering, setIsRegistering] = useState(false);
-    const [formData, setFormData] = useState({
+function AuthForm({ onAuthSuccess }) { // Componente para manejar el formulario de autenticación.
+    const [isRegistering, setIsRegistering] = useState(false); // Estado para alternar entre registro e inicio de sesión.
+    const [formData, setFormData] = useState({ // Estado para almacenar los datos del formulario.
         name: "",
         email: "",
         password: ""
     });
-    const [error, setError] = useState(null);
+    const [error, setError] = useState(null); // Estado para manejar mensajes de error.
 
+    // Maneja los cambios en los inputs del formulario.
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        const { name, value } = e.target; // Obtiene el nombre y valor del input.
+        setFormData({ ...formData, [name]: value }); // Actualiza el estado del formulario.
     };
 
+    // Maneja el envío del formulario.
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Previene el comportamiento predeterminado del formulario.
        
         try {
             if (isRegistering) {
-                await api.post("/auth/register",{
-                    name: formData.name,
-                    email: formData.email,
-                    password: formData.password
-                });
-                setIsRegistering(false);
+              // Si el usuario está registrándose, realiza una solicitud al endpoint de registro.
+              await api.post("/auth/register",{
+                  name: formData.name,
+                  email: formData.email,
+                  password: formData.password
+              });
+              setIsRegistering(false); // Cambia al modo de inicio de sesión tras registrarse.
             } else {
-                const { data } = await api.post("/auth/login", {
-                    email: formData.email,
-                    password: formData.password
-                });
+              // Si el usuario está iniciando sesión, realiza una solicitud al endpoint de login.
+              const { data } = await api.post("/auth/login", {
+                  email: formData.email,
+                  password: formData.password
+              });
+            
+            // Obtiene el nombre del usuario mediante el endpoint de búsqueda.
+            const userResponse = await api.get(`/auth/user/search/email?email=${formData.email}`);
+            localStorage.setItem("userName", userResponse.data.name);// Almacena el nombre del usuario en el almacenamiento local.
                 
-                const userResponse = await api.get(`/auth/user/search/email?email=${formData.email}`);
-                localStorage.setItem("userName", userResponse.data.name);
-                
-                localStorage.setItem("token", data.token);
-                onAuthSuccess();
+            localStorage.setItem("token", data.token); // Almacena el token en el almacenamiento local.
+            onAuthSuccess(); // Llama a la función proporcionada para manejar un inicio de sesión exitoso.
             }
                 
         }catch (error) {
-            setError(error.response.data.message);
+            setError(error.response.data.message); // Maneja errores y actualiza el estado con el mensaje correspondiente.
         }
     }
 

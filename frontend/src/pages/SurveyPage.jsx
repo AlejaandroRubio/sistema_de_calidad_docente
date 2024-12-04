@@ -5,104 +5,109 @@ import { useNavigate } from 'react-router-dom'; // Importa useNavigate
 
 
 function SurveyPage() {
-  //#region State Management
-  const [survey, setSurvey] = useState([]);
-  const [surveyDetails, setSurveyDetails] = useState(null);
-  const [showDetails, setShowDetails] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [userData, setUserData] = useState({ name: '', email: '', password: '' });
-  const [editingUser, setEditingUser] = useState(false);
-  const [username, setUsername] = useState('');
-  const navigate = useNavigate(); // Inicializar useNavigate
-  //#endregion
+//#region State Management
+const [survey, setSurvey] = useState([]);// `survey` almacena las encuestas obtenidas desde la API.
+const [surveyDetails, setSurveyDetails] = useState(null);// `surveyDetails` contiene los detalles de una encuesta seleccionada.
+const [showDetails, setShowDetails] = useState(false);// `showDetails` controla si se muestra el modal con detalles de la encuesta.
+const [searchTerm, setSearchTerm] = useState('');// `searchTerm` almacena el término de búsqueda para filtrar encuestas.
+const [userData, setUserData] = useState({ name: '', email: '', password: '' });// `userData` contiene la información del usuario para actualizarla o editarla.
+const [editingUser, setEditingUser] = useState(false);// `editingUser` indica si el modal para editar datos del usuario está activo.
+const [username, setUsername] = useState('');// `username` almacena el nombre del usuario desde el localStorage.
+const navigate = useNavigate();// Hook de navegación para redireccionar.
 
-  // #region API Calls
+//#endregion
+
+// #region API Calls
+  // Función para obtener todas las encuestas o filtrar por título.
   const fetchSurveys  = async (title = '') => {
     try {
       const { data } = title 
-        ? await api.get(`/survey/search/by-title?title=${title}`)
-        : await api.get('/survey');
+        ? await api.get(`/survey/search/by-title?title=${title}`) // Buscar por título.
+        : await api.get('/survey');  // Obtener todas las encuestas.
       setSurvey(data);
     } catch (err) {
       console.error('Error al cargar las survey:', err);
     }
   };
 
+  // Obtener detalles de una encuesta específica por su ID.
   const viewSurveyDetails = async (id) => {
     try {
-      const { data } = await api.get(`/survey/${id}`);
-      const username = await api.get(`auth/user/${data.user}`);
+      const { data } = await api.get(`/survey/${id}`); // Datos de la encuesta.
+      const username = await api.get(`auth/user/${data.user}`); // Información del creador.
       const detalleConUsuario = {
         ...data,
-        username: username.data ? username.data.name : 'Usuario eliminado',
+        username: username.data ? username.data.name : 'Usuario eliminado', // Manejo de usuario eliminado.
       };
       setSurveyDetails(detalleConUsuario);
-      setShowDetails(true);
+      setShowDetails(true); // Mostrar detalles en el modal.
     } catch (err) {
       console.error('Error al cargar los detalles de la encuesta:', err);
     }
   };
 
+  // Cerrar el modal de detalles. 
   const closeDetails  = () => {
     setShowDetails(false);
     setSurveyDetails(null);
   };
 
+  // Eliminar una encuesta por su ID.
   const deleteSurvey  = async (id) => {
     try {
-      await api.delete(`/survey/delete/${id}`);
-      setSurvey(survey.filter(encuesta => encuesta._id !== id));
+      await api.delete(`/survey/delete/${id}`);  // Llamada a la API para eliminar.
+      setSurvey(survey.filter(encuesta => encuesta._id !== id));// Actualizar lista de encuestas.
       closeDetails ();
     } catch (err) {
       console.error('Error al eliminar la encuesta:', err);
     }
   };
 
+  // Actualizar los datos del usuario actual.
   const updateUser = async () => {
     try {
-      await api.put('/auth/update', userData);
-      setEditingUser(false);
-      setUserData({ name: '', email: '', password: '' });
+      await api.put('/auth/update', userData); // Enviar los datos editados.
+      setEditingUser(false); // Cerrar el modal de edición.
+      setUserData({ name: '', email: '', password: '' }); // Limpiar los datos temporales.
     } catch (err) {
       console.error('Error al actualizar los datos del usuario:', err);
     }
   };
-
+  // Eliminar la cuenta del usuario.
   const deleteUser = async () => {
     try {
-      await api.delete('/auth/delete');
-      localStorage.removeItem('token');
-      navigate('/');
+      await api.delete('/auth/delete'); // Llamada a la API para borrar la cuenta.
+      localStorage.removeItem('token'); // Eliminar token local.
+      navigate('/'); // Redirigir a la página principal.
     } catch (err) {
       console.error('Error al eliminar la cuenta:', err);
     }
   };
-  //#endregion
+//#endregion
 
-  // #region Handlers
+// #region Handlers
+  // Cerrar sesión del usuario.
   const logout = () => {
     localStorage.removeItem('token'); // Eliminar el token del storage
     navigate('/'); // Redirigir a la página principal
   };
-  // #endregion
+// #endregion
 
- 
-
-  // #region Effects
-
-
+ // #region Effects
+  // Verificar si el token del usuario es válido.
   useEffect(() => {
  
     const verifyToken = async () => {
       const token = localStorage.getItem('token');
       if (!token) {
-        navigate('/');
+        navigate('/');  // Redirigir si no hay token.
       } else {
         try {
           const response= await api.get('/auth/verify-Token');
           if (response.data === true) {
             console.log('Token verificado');
           }else{
+            // Manejo de token no válido
             console.log('Token no verificado');
             localStorage.removeItem('token');
             localStorage.removeItem('userName');
@@ -136,9 +141,9 @@ function SurveyPage() {
       fetchSurveys ();
     }
   }, [searchTerm]);
-  //#endregion
+//#endregion
   
-  //#region Render
+//#region Render
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="flex justify-between items-center mb-6">

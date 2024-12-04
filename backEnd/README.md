@@ -1,6 +1,6 @@
 # Backend
 ## **controllers/**
-### authController.js
+### **authController.js**
 Gestiona las operaciones relacionadas con la autenticación y el manejo de usuarios en el sistema. Proporciona las siguientes funcionalidades:
 
 - **Registro de usuarios:** Permite crear un nuevo usuario en la base de datos y devuelve un token de autenticación.
@@ -33,7 +33,7 @@ exports.login = async (req, res) => {
 }
 ```
 
-### surveyController.js
+### **surveyController.js**
 
 Gestiona las operaciones relacionadas con las encuestas. Proporciona las siguientes funcionalidades:
 
@@ -116,7 +116,7 @@ Este archivo define las rutas relacionadas con la gestión de encuestas. Todas l
     - `/delete/:id`: Elimina una encuesta específica por su ID mediante el controlador deleteSurvey.
 
 ## config/
-### db.js
+### **db.js**
 Conexión con MongoDB:
 
 - La función `connectDB` se define como asincrónica (`async`), lo que permite manejar la conexión a la base de datos de forma eficiente usando `await`.
@@ -124,7 +124,7 @@ Conexión con MongoDB:
     - `useNewUrlParser`: Configura el analizador de URL de MongoDB para que sea el más reciente.
     - `useUnifiedTopology`: Habilita el motor unificado de topología de MongoDB para manejar las conexiones de manera más robusta.
 
-## server.js
+## **server.js**
 Este archivo es el punto de entrada de la aplicación Express. Define la configuración básica del servidor, conecta la base de datos, maneja las rutas, y configura los middlewares necesarios para que la API funcione correctamente.
 
 - **Configuración del servidor**:
