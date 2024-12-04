@@ -149,12 +149,17 @@ Este archivo es esencialmente el punto de inicio de la aplicación React. Aquí 
 ## Interfaz grafica
 
 ## Login
-![Texto alternativo](../diagrams/PNG/AuthPageLogin.png)
+<img src="../diagrams/PNG/AuthPageLogin.png" alt="Texto alternativo" width="750">
+
 ## Register
-![Texto alternativo](../diagrams/PNG/AuthPageRegister.png)
+<img src="../diagrams/PNG/AuthPageRegister.png" alt="Texto alternativo" width="750">
+
 ## Encuestas
-![Texto alternativo](../diagrams/PNG/SurveyPage.png)
+<img src="../diagrams/PNG/SurveyPage.png" alt="Texto alternativo" width="750">
+
 ### Modal de "Ver Detalles"
-![Texto alternativo](../diagrams/PNG/SurveyPageVerDetalles.png)
+<img src="../diagrams/PNG/SurveyPageVerDetalles.png" alt="Texto alternativo" width="750">
+
 ### Modal de "Editar Datos del Usuario"
-![Texto alternativo](../diagrams/PNG/SurveyPageEditarDatosUsuario.png)
+<img src="../diagrams/PNG/SurveyPageEditarDatosUsuario.png" alt="Texto alternativo" width="750">
+
