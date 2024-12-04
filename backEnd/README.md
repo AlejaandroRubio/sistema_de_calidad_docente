@@ -94,7 +94,7 @@ Este archivo define las rutas para la gestión de usuarios y la autenticación e
 
 - Rutas protegidas:
 
-    - Utilizan el middleware protect para garantizar que solo usuarios autenticados puedan acceder.
+    Utilizan el middleware protect para garantizar que solo usuarios autenticados puedan acceder.
     - `/delete`: Permite al usuario autenticado eliminar su cuenta.
     - `/update`: Permite al usuario autenticado actualizar sus datos personales.
     - `/user/:id`: Recupera los datos de un usuario por su ID.
