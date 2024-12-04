@@ -1,7 +1,9 @@
 # Frontend
 ## **public/**
 ### **index.html**
----
+
+Este archivo es la estructura base de la aplicación web, escrita en HTML. Define el esqueleto del documento donde React montará su interfaz. El elemento más importante es el `<div id="root">`, que actúa como el punto de entrada donde se renderizan los componentes React. Además, incluye configuraciones básicas como el favicon, metaetiquetas para el diseño responsivo y el título de la página.
+
 ## **src/**
 ## **components/**
 ### **AuthForm.jsx**
@@ -75,7 +77,7 @@ Características:
             setError('');
         };
         ```
-    - addOption: Añade una nueva opción vacía a una pregunta específica.
+    - `addOption`: Añade una nueva opción vacía a una pregunta específica.
 
 5. **Envío del formulario**
 
@@ -136,4 +138,10 @@ SurveyPage gestiona las encuestas, la información del usuario y la interacción
     - Si existe, se agrega al encabezado `x-auth-token` de la solicitud.
     - Si ocurre un error, se rechaza la solicitud.
 ## **App.js**
+Dentro del componente Routes, se definen dos rutas:
+
+- La primera ruta es `"/"`, que corresponde a la página de inicio de sesión (`LoginPage`). Esto significa que cuando el usuario accede a la URL raíz de la aplicación (por ejemplo, http://localhost:3000/), se mostrará el componente `LoginPage`.
+- La segunda ruta es `"/encuestas"`, que corresponde a la página de encuestas (`SurveyPage`). Esta ruta se activa cuando el usuario navega a http://localhost:3000/encuestas, y renderiza el componente `SurveyPage`.
+
 ## **index.js**
+Este archivo es esencialmente el punto de inicio de la aplicación React. Aquí se importa el componente `App`, se envuelve en `React.StrictMode` para facilitar el desarrollo y se renderiza en el DOM dentro del elemento con el id `root`. Esto le indica a React dónde debe comenzar la renderización de la interfaz de usuario.
