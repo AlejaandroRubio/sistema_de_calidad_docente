@@ -116,7 +116,6 @@ Este archivo define las rutas relacionadas con la gestión de encuestas. Todas l
     - `/:id`: Obtiene una encuesta específica identificada por su ID a través del controlador getSurveysById.
     - `/search/by-title`: Busca encuestas que coincidan con un título parcial o completo usando el controlador getSurveysByTitle.
     - `/delete/:id`: Elimina una encuesta específica por su ID mediante el controlador deleteSurvey.
-    ---
 
 ![Texto alternativo](../diagrams/SVG/flowchartRoutesSurvey.svg)
 
