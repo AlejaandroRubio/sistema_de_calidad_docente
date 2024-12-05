@@ -19,7 +19,7 @@ router.delete('/delete', protect, deleteUser); // Ruta protegida para eliminar l
 router.put('/update', protect, updateUser); // Ruta protegida para actualizar los datos del usuario autenticado.
 
 router.get('/user/:id', protect, findUserById); // Ruta protegida para obtener los datos de un usuario por su ID.
-router.get('/user/search/email', findUserByEmail); // Ruta para buscar un usuario por su email (sin protección).
+router.get('/user/search/email',protect, findUserByEmail); // Ruta para buscar un usuario por su email (sin protección).
 
 router.get('/verify-Token', verifyToken); // Ruta para verificar si un token es válido.
 
