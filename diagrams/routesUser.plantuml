@@ -1,0 +1,30 @@
+@startuml
+start
+:Solicitud en rutas de usuarios;
+
+if (Ruta pública?) then (Sí)
+  fork
+    :register;
+  fork again
+    :login;
+  fork again
+    :verifyToken;
+  end fork
+else (No)
+  :Middleware protect verifica autenticación;
+
+  if (Token válido?) then (Sí)
+    fork
+      :deleteUser;
+    fork again
+      :updateUser;
+    fork again
+      :findUserById;
+    end fork
+  else (No)
+    :Error;
+    stop
+  endif
+endif
+stop
+@enduml

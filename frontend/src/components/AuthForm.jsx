@@ -37,14 +37,16 @@ function AuthForm({ onAuthSuccess }) { // Componente para manejar el formulario 
               });
             
             // Obtiene el nombre del usuario mediante el endpoint de búsqueda.
+            localStorage.setItem("token", data.token); // Almacena el token en el almacenamiento local.
+
             const userResponse = await api.get(`/auth/user/search/email?email=${formData.email}`);
             localStorage.setItem("userName", userResponse.data.name);// Almacena el nombre del usuario en el almacenamiento local.
                 
-            localStorage.setItem("token", data.token); // Almacena el token en el almacenamiento local.
             onAuthSuccess(); // Llama a la función proporcionada para manejar un inicio de sesión exitoso.
             }
                 
         }catch (error) {
+            alert("Error al iniciar sesión");
             setError(error.response.data.message); // Maneja errores y actualiza el estado con el mensaje correspondiente.
         }
     }

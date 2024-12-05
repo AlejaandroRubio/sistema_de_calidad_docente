@@ -1,0 +1,24 @@
+@startuml
+start
+:Solicitud en rutas de encuetas;
+:authMiddleware verifica token;
+
+if (Token válido?) then (Sí)
+  fork
+    :createSurvey;
+  fork again
+    :getSurveysSummarized;
+  fork again
+    :getSurveysById;
+  fork again
+    :getSurveysByTitle;
+  fork again
+    :deleteSurvey;
+  end fork
+else (No)
+  :Error;
+  stop
+endif
+stop
+@enduml
+

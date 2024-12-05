@@ -89,6 +89,7 @@ const navigate = useNavigate();// Hook de navegación para redireccionar.
   // Cerrar sesión del usuario.
   const logout = () => {
     localStorage.removeItem('token'); // Eliminar el token del storage
+    localStorage.removeItem('userName'); // Eliminar el nombre del storage
     navigate('/'); // Redirigir a la página principal
   };
 // #endregion

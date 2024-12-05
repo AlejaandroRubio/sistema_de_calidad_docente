@@ -98,9 +98,9 @@ Este archivo define las rutas para la gestión de usuarios y la autenticación e
     - `/delete`: Permite al usuario autenticado eliminar su cuenta.
     - `/update`: Permite al usuario autenticado actualizar sus datos personales.
     - `/user/:id`: Recupera los datos de un usuario por su ID.
+    - `/user/search/email`: Busca un usuario por su email. 
 
 - Rutas específicas:
-    - `/user/search/email`: Busca un usuario por su email. Es una ruta pública que no requiere autenticación (aunque puede considerarse agregar protección dependiendo del caso de uso).
     - `/verify-Token`: Verifica si el token enviado por el cliente es válido. Es útil para comprobar sesiones activas.
 
 ### **survey.js**
@@ -114,6 +114,9 @@ Este archivo define las rutas relacionadas con la gestión de encuestas. Todas l
     - `/:id`: Obtiene una encuesta específica identificada por su ID a través del controlador getSurveysById.
     - `/search/by-title`: Busca encuestas que coincidan con un título parcial o completo usando el controlador getSurveysByTitle.
     - `/delete/:id`: Elimina una encuesta específica por su ID mediante el controlador deleteSurvey.
+    ---
+
+![Texto alternativo](../diagrams/SVG/flowchartRoutesSurvey.svg)
 
 ## config/
 ### **db.js**
