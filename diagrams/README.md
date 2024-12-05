@@ -10,7 +10,7 @@
 | ------------------------------------------ | -------------------------------------- |
 | ![Texto alternativo](SVG/frontendDiagram.svg) | [Enlace a la carpeta](frontendDiagram.plantuml) |
 
-### Casos de Uso
+# Casos de Uso
 | Imagen                                     |                                 |
 | ------------------------------------------ | -------------------------------------- |
 | ![Texto alternativo](SVG/UserManagementUCs.svg) | [Enlace a la carpeta](UserManagementUCs.plantuml) |
