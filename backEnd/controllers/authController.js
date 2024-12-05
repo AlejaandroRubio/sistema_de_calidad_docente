@@ -17,13 +17,7 @@ exports.register = async (req, res) => {
         user = new User({name,email,password});
         await user.save(); // Guarda el usuario en la base de datos.
 
-        // Crea un token de autenticación con los datos del usuario.
-        const payload = {userId: user.id, name: user.name, email: user.email};
-        const token = jwt.sign(payload, process.env.JWT_SECRET, {
-            expiresIn: '1h' // Configura la expiración del token a 1 hora.
-        });
-
-        res.json({token}); // Devuelve el token al cliente.
+        res.json({msg: "Usuario Creado"}); // Devuelve el token al cliente.
     }catch (error) {
         console.error(error); // Muestra cualquier error en la consola.
         res.status(500).json({msg: 'Hubo un error'}); // Responde con un mensaje de error genérico.
