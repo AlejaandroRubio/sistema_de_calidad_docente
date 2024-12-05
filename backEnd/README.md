@@ -103,6 +103,8 @@ Este archivo define las rutas para la gestión de usuarios y la autenticación e
 - Rutas específicas:
     - `/verify-Token`: Verifica si el token enviado por el cliente es válido. Es útil para comprobar sesiones activas.
 
+![Texto alternativo](../diagrams/SVG/flowchartRoutesUser.svg)
+
 ### **survey.js**
 
 Este archivo define las rutas relacionadas con la gestión de encuestas. Todas las rutas están protegidas mediante el middleware protect, lo que garantiza que solo los usuarios autenticados puedan acceder a ellas.
