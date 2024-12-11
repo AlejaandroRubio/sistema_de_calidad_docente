@@ -84,7 +84,7 @@ exports.updateUser = async (req, res) => {
         // Actualiza los datos del usuario.
         user.name = name;
         user.email = email;
-        user.password = EncryptPassword(password); // Encripta la nueva contraseña.
+        user.password = password
 
         await user.save(); // Guarda los cambios en la base de datos.
 
@@ -123,8 +123,3 @@ exports.findUserByEmail = async (req, res) => {
     }
 }
 //#endregion
-
-function EncryptPassword(password) {
-    const salt = bcrypt.genSaltSync(10); // Genera un salt para la encriptación.
-    return bcrypt.hashSync(password, salt); // Encripta la contraseña utilizando el salt.
-}
