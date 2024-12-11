@@ -7,7 +7,7 @@ Gestiona las operaciones relacionadas con la autenticación y el manejo de usuar
 - **Inicio de sesión:** Valida las credenciales y genera un token para acceder a recursos protegidos.
 - **Eliminación de usuarios:** Borra un usuario de la base de datos utilizando su ID.
 - **Actualización de usuarios:** Modifica los datos del usuario y encripta la nueva contraseña.
--**Búsqueda de usuarios:** Permite obtener información de un usuario por ID o correo electrónico.
+- **Búsqueda de usuarios:** Permite obtener información de un usuario por ID o correo electrónico.
 
 Además, utiliza bibliotecas como **jsonwebtoken** (**JWT**) para manejar la autenticación basada en tokens y bcrypt para la encriptación de contraseñas. Esto asegura un manejo seguro y eficiente de la información de los usuarios. Como podemos observar, el token incluye en su payload información clave, como el ID del usuario, su nombre y su correo electrónico.
 
